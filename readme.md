@@ -5,7 +5,7 @@
 Tool to convert this:
 
 ```markdown
-# Test 1
+# Dummy Category 1
 
 * What is the color of the sky?
     - red
@@ -19,7 +19,7 @@ Tool to convert this:
     - !atom
     - microsoft word
 
-# Test 2
+# Dummy Category 2
 
 * Who is the main protagonist in Dragon Ball?
     - !Son Goku
