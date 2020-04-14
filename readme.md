@@ -10,19 +10,19 @@ Tool to convert this:
 * What is the color of the sky?
     - red
     - green
-    - blue 
+    - !blue
     - yellow
 
 * Which ones are programmer's text editor?
-    - sublime text 
-    - vim 
-    - atom 
+    - !sublime text
+    - !vim
+    - !atom
     - microsoft word
 
 # Test 2
 
 * Who is the main protagonist in Dragon Ball?
-    - Son Goku 
+    - !Son Goku
     - Picolo
     - Son Gohan
     - Vegeta
@@ -34,39 +34,220 @@ let b = 6
 const c = 7
 ``  ```
 Which one is immutable?
-    - a
-    - b
-    - c 
+    - `a`
+    - `b`
+    - !`c`
 
 * What is this?
     ![turtle](turtle.png)
-    - A turtle 
+    - !A turtle
     - A bird
 
 * How do you spell $\alpha + \beta$?
     - a plus b
-    - alpha plus beta
+    - !alpha plus beta
     - a fish and a funny flag
 ```
 
 into this:
 ```xml
-<?xml version="1.0" ?><quiz><question type="multichoice"><name><text>15f6bfae9c738eb5d5a625137c68f9d97217c9837bcef14f390b01f7</text></name><questiontext format="html"><text><![CDATA[What is the color of the sky?]]></text></questiontext><answer fraction="0"><text>red</text></answer><answer fraction="0"><text>green</text></answer><answer fraction="100.0"><text>blue</text></answer><answer fraction="0"><text>yellow</text></answer><shuffleanswers>1</shuffleanswers><single>true<answernumbering>abc</answernumbering></question><question type="multichoice"><name><text>1eb06c0febabb0ca206aa732e0bb607e50467a84209bf89b311afe3a</text></name><questiontext format="html"><text><![CDATA[Which ones are programmer's text editor?]]></text></questiontext><answer fraction="33.33"><text>sublime text</text></answer><answer fraction="33.33"><text>vim</text></answer><answer fraction="33.33"><text>atom</text></answer><answer fraction="0"><text>microsoft word</text></answer><shuffleanswers>1</shuffleanswers>false</single><answernumbering>abc</answernumbering></question></quiz>
+<?xml version="1.0" ?>
+<quiz>
+    <question type="category">
+        <category>
+            <text>Dummy Category 1</text>
+        </category>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>0001ca41c468595917f8db53401016a17806</text>
+        </name>
+        <questiontext format="html">
+            <text><![CDATA[<p>What is the color of the sky?</p>]]></text>
+        </questiontext>
+        <answer fraction="0">
+            <text>red</text>
+        </answer>
+        <answer fraction="0">
+            <text>green</text>
+        </answer>
+        <answer fraction="100.0">
+            <text>blue</text>
+        </answer>
+        <answer fraction="0">
+            <text>yellow</text>
+        </answer>
+        <shuffleanswers>1</shuffleanswers>
+        <single>true</single>
+        <answernumbering>abc</answernumbering>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>0002b1b432fc13953e0639afed9a294c912d</text>
+        </name>
+        <questiontext format="html">
+            <text><![CDATA[<p>Which ones are programmer's <code>text editor</code>?</p>]]></text>
+        </questiontext>
+        <answer fraction="33.3333333">
+            <text>sublime text</text>
+        </answer>
+        <answer fraction="33.3333333">
+            <text>vim</text>
+        </answer>
+        <answer fraction="33.3333333">
+            <text>atom</text>
+        </answer>
+        <answer fraction="0">
+            <text>microsoft word</text>
+        </answer>
+        <shuffleanswers>1</shuffleanswers>
+        <single>false</single>
+        <answernumbering>abc</answernumbering>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>0003e03a957a6dbc75372b9b894392eed107</text>
+        </name>
+        <questiontext format="html">
+            <text><![CDATA[<p>What is this?<img style="display:block;" src="data:image/png;base64,iVBORw..." /></p>]]></text>
+        </questiontext>
+        <answer fraction="100.0">
+            <text>A turtle</text>
+        </answer>
+        <answer fraction="0">
+            <text>A bird</text>
+        </answer>
+        <shuffleanswers>1</shuffleanswers>
+        <single>true</single>
+        <answernumbering>abc</answernumbering>
+    </question>
+</quiz>
 ```
 and this:
 ```xml
-<?xml version="1.0" ?><quiz><question type="multichoice"><name><text>85de507bd37c9dce0bac518e16fd8fa5b55cff8861fb49ec57f133cd</text></name><questiontext format="html"><text><![CDATA[Who is the main protagonist in Dragon Ball?]]></text></questiontext><answer fraction="100.0"><text>Son Goku</text></answer><answer fraction="0"><text>Picolo</text></answer><answer fraction="0"><text>Son Gohan</text></answer><answer fraction="0"><text>Vegeta</text></answer><shuffleanswers>1</shuffleanswers><single>true<answernumbering>abc</answernumbering></question><question type="multichoice"><name><text>6761a53fa753fbc447640804062afb329b98e9931e825ae0914255dd</text></name><questiontext format="html"><text><![CDATA[Look at this code:<pre>var a = 5
+<?xml version="1.0" ?>
+<quiz>
+    <question type="category">
+        <category>
+            <text>Dummy Category 2</text>
+        </category>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>0001340edd40c654d705576e050bbedf67fb</text>
+        </name>
+        <questiontext format="html">
+            <text><![CDATA[<p>Who is the main protagonist in Dragon Ball?</p>]]></text>
+        </questiontext>
+        <answer fraction="100.0">
+            <text>Son Goku</text>
+        </answer>
+        <answer fraction="0">
+            <text>Picolo</text>
+        </answer>
+        <answer fraction="0">
+            <text>Son Gohan</text>
+        </answer>
+        <answer fraction="0">
+            <text>Vegeta</text>
+        </answer>
+        <shuffleanswers>1</shuffleanswers>
+        <single>true</single>
+        <answernumbering>abc</answernumbering>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>0002208e45e4a90f41bba61271891e44fab3</text>
+        </name>
+        <questiontext format="html">
+            <text><![CDATA[<p>Look at this code:<pre><code>var a = 5
 let b = 6
 const c = 7
-</pre>Which one is immutable?
-]]></text></questiontext><answer fraction="0"><text>a</text></answer><answer fraction="0"><text>b</text></answer><answer fraction="100.0"><text>c</text></answer><shuffleanswers>1</shuffleanswers><single>true<answernumbering>abc</answernumbering></question></quiz>
+</code></pre>
+Which one is immutable?</p>]]></text>
+        </questiontext>
+        <answer fraction="0">
+            <text><![CDATA[<p>Variable <code>a</code></p>]]></text>
+        </answer>
+        <answer fraction="0">
+            <text><![CDATA[<p>b as in \(b\)</p>]]></text>
+        </answer>
+        <answer fraction="100.0">
+            <text>c</text>
+        </answer>
+        <shuffleanswers>1</shuffleanswers>
+        <single>true</single>
+        <answernumbering>abc</answernumbering>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>0003ae110b9b227ddc3dff1ec581739fac6b</text>
+        </name>
+        <questiontext format="html">
+            <text><![CDATA[<p>Look at this code:<pre><code>var a = 5
+let b = 6
+const c = 7
+</code></pre>
+Which one is mutable?</p>]]></text>
+        </questiontext>
+        <answer fraction="0">
+            <text>a</text>
+        </answer>
+        <answer fraction="100.0">
+            <text>b</text>
+        </answer>
+        <answer fraction="0">
+            <text>c</text>
+        </answer>
+        <shuffleanswers>1</shuffleanswers>
+        <single>true</single>
+        <answernumbering>abc</answernumbering>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>000476982886ab058e51e75d5d036ef67218</text>
+        </name>
+        <questiontext format="html">
+            <text><![CDATA[<p>What is this?<img style="display:block;" src="data:image/png;base64,iVBO..." /></p>]]></text>
+        </questiontext>
+        <answer fraction="100.0">
+            <text>A turtle</text>
+        </answer>
+        <answer fraction="0">
+            <text>A bird</text>
+        </answer>
+        <shuffleanswers>1</shuffleanswers>
+        <single>true</single>
+        <answernumbering>abc</answernumbering>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>000576341a92709dba73f9e5c5ea3318374e</text>
+        </name>
+        <questiontext format="html">
+            <text><![CDATA[<p>How do you spell \(\alpha + \beta\)?</p>]]></text>
+        </questiontext>
+        <answer fraction="0">
+            <text>a plus b</text>
+        </answer>
+        <answer fraction="100.0">
+            <text>alpha plus beta</text>
+        </answer>
+        <answer fraction="0">
+            <text>a fish and a funny flag</text>
+        </answer>
+        <shuffleanswers>1</shuffleanswers>
+        <single>true</single>
+        <answernumbering>abc</answernumbering>
+    </question>
+</quiz>
 ```
 
 ## Why?
 
 * Because writing quizes in `markdown` format is more pleasant than write it in `ms-office`, `libre-office` or `GIFT format`.
 * You can transform `markdown` file into `pdf` by using `pandoc`: `pandoc -f markdown  -o example.pdf example.md`
-* Because our live is too short to copy-pasting the quizes into moodle
+* Because our live is too short to copy-pasting the quizes into moodle 
 * Because sometimes `macro` doesn't work
 
 ## How to use?
@@ -77,18 +258,19 @@ Simply cast: `python m2m.py <your-md-file>`
 
 Sure, cast this: `python m2m.py example.md`
 
-New files will be created: `example.md-Test 1.xml` and `example.md-Test 2.xml`
+New files will be created: `example-DummyCategory1.xml` and `example-DummyCategory2.xml`
 
 ## Is there anything special with the markdown file?
 
 Yes.
 
-* First, I treat `# section` as beginning of new section, because sometimes I write a quizes for different subjects in a single file.
+* First, I treat `# section` as beginning of new question bank, with `section` has the *category* of the following questions.
 * Second, I treat `* question` as question. A question can contains multi-line string
-* Third, I treat ` - answer` as wrong answer and ` - answer<space>` as correct answer. The correct answer has extra space behind. An answer only contains single line
+* Third, I treat ` - answer` as wrong answer and ` - !answer` as correct answer. The correct answer has an exclamation mark at the beginning
 * Any line preceeded by triple backtick will be converted to `<pre>` or `</pre>`
 * Any `![]()` will be converted into `<img src="data:image/png,base64,..."/>`
 * Any `$latex$` or `$$latex$$` will be converted into `\(\)`
+* Any inline code will be translated wrapped inside `<code>` tag
 
 ## Prerequisites
 
@@ -96,19 +278,17 @@ Yes.
 * `markdown` python package (`pip install markdown`)
 * Human, non-muggle
 
-# Bonus: Web App
+## Improvements / Fixes from this fork
 
-I also make a web page so that you can write your markdown in the web and convert it into `pdf`, `doc`, and `moodle xml` at once.
+This fork makes the following changes and/or improvements:
 
-## Prerequisites
+- `[DONE]` Allow different answer numbering from allowed values: 'none', 'abc', 'ABCD' or '123'
+- `[DONE]` Usage of prefix '!' in answer to mark it as correct (instead of space at the end)
+- `[DONE]` Usage of section name for quiz category (adds a dummy question, as per Moodle spec.)
+  - This only works if you have "Get category from file" checked, when importing in Moodle
+- `[FIX]`  Output of inline code should be wrapped only inside `<code>` tag
+- `[DONE]` Allow code formatting in answers for single block code and single dollar math 
+- `[DONE]` Output file based on (input filename + section text), but further sanitized
+- `[DONE]` Use of MD5 hash for question names instead of SHA224 -- more compact in Moodle view
+  - Probability of collision should remain fairly low within the expected question bank size)
 
-* Flask `pip install Flask`
-* pypandoc `pip install pypandoc`
-
-## Run the server
-
-`python web.py`
-
-## Access the page
-
-`http://localhost:5000`
