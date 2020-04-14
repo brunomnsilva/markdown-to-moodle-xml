@@ -32,21 +32,26 @@ let b = 6
 const c = 7
 ```
 Which one is immutable?
-    - Variable `a`
-    - b as in $b$
+    - `a`
+    - $b$ 
     - !c
 
 * Look at this code:
-```javascript
-var a = 5
-let b = 6
-const c = 7
-```
-Which one is mutable?
-    - a
-    - !b
-    - c
+```cpp
+#include <stdio.h>
 
+int main() {
+    int a = 1, b = 2;
+    if(a < b )
+        printf("Hello a World \n");
+    else
+        printf("Hello b World \n");
+    return EXIT_SUCCESS;
+}
+```
+Does this code compile?
+    - !Yes
+    - No
 
 * What is this?
 ![turtle](turtle.png)

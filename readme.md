@@ -35,8 +35,25 @@ const c = 7
 ``  ```
 Which one is immutable?
     - `a`
-    - `b`
-    - !`c`
+    - $b$ 
+    - !c
+
+* Look at this code:
+```cpp
+#include <stdio.h>
+
+int main() {
+    int a = 1, b = 2;
+    if(a < b )
+        printf("Hello a World \n");
+    else
+        printf("Hello b World \n");
+    return EXIT_SUCCESS;
+}
+```
+Does this code compile?
+    - !Yes
+    - No
 
 * What is this?
     ![turtle](turtle.png)
@@ -181,23 +198,26 @@ Which one is immutable?</p>]]></text>
     </question>
     <question type="multichoice">
         <name>
-            <text>0003ae110b9b227ddc3dff1ec581739fac6b</text>
+            <text>0003ef08d0d95e79790317ba892e0916c594</text>
         </name>
         <questiontext format="html">
-            <text><![CDATA[<p>Look at this code:<pre><code>var a = 5
-let b = 6
-const c = 7
+            <text><![CDATA[<p>Look at this code:<pre><code>#include &lt;stdio.h&gt;
+int main() {
+    int a = 1, b = 2;
+    if(a &lt; b )
+        printf("Hello a World \n");
+    else
+        printf("Hello b World \n");
+    return EXIT_SUCCESS;
+}
 </code></pre>
-Which one is mutable?</p>]]></text>
+Does this code compile?</p>]]></text>
         </questiontext>
-        <answer fraction="0">
-            <text>a</text>
-        </answer>
         <answer fraction="100.0">
-            <text>b</text>
+            <text>Yes</text>
         </answer>
         <answer fraction="0">
-            <text>c</text>
+            <text>No</text>
         </answer>
         <shuffleanswers>1</shuffleanswers>
         <single>true</single>
@@ -291,4 +311,4 @@ This fork makes the following changes and/or improvements:
 - `[DONE]` Output file based on (input filename + section text), but further sanitized
 - `[DONE]` Use of MD5 hash for question names instead of SHA224 -- more compact in Moodle view
   - Probability of collision should remain fairly low within the expected question bank size)
-
+- `[FIX]` Fix html escaping for <, > and & inside code blocks

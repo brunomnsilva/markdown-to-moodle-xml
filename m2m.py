@@ -10,15 +10,16 @@
 #
 # This fork makes the following changes and/or improvements:
 #
-# - [DONE] Allow different answer numbering from allowed values: 'none', 'abc', 'ABCD' or '123'
-# - [DONE] Usage of prefix '!' in answer to mark it as correct (instead of space at the end)
-# - [DONE] Usage of section name for quiz category (adds a dummy question, as per Moodle spec.)
+# - `[DONE]` Allow different answer numbering from allowed values: 'none', 'abc', 'ABCD' or '123'
+# - `[DONE]` Usage of prefix '!' in answer to mark it as correct (instead of space at the end)
+# - `[DONE]` Usage of section name for quiz category (adds a dummy question, as per Moodle spec.)
 #   - This only works if you have "Get category from file" checked, when importing in Moodle
-# - [FIX]  Output of inline code should be wrapped only inside <code> tag
-# - [DONE] Allow code formatting in answers for single block code and single dollar math 
-# - [DONE] Output file based on (input filename + section text), but further sanitized
-# - [DONE] Use of MD5 hash for question names instead of SHA224 -- more compact in Moodle view
+# - `[FIX]`  Output of inline code should be wrapped only inside <code> tag
+# - `[DONE]` Allow code formatting in answers for single block code and single dollar math 
+# - `[DONE]` Output file based on (input filename + section text), but further sanitized
+# - `[DONE]` Use of MD5 hash for question names instead of SHA224 -- more compact in Moodle view
 #   - Probability of collision should remain fairly low within the expected question bank size)
+# - `[FIX]` Fix html escaping for <, > and & inside code blocks
 #----------------------------------------------------------------------------------------------
 
 import os
@@ -240,6 +241,15 @@ def wrap_cdata(html):
     """Wraps content inside a CDATA xml block."""
     return '<![CDATA[' + html + ']]>'
 
+def sanitize_entities(text):
+    """Converts <, > and & to html entities."""
+
+    #unfortunately, this order is important
+    text = text.replace('&','&amp;')
+    text = text.replace('>','&gt;')
+    text = text.replace('<','&lt;')
+        
+    return text
 
 def render_answer(text):
     """Produces the output for an answer's text.
@@ -253,6 +263,9 @@ def render_answer(text):
 
     convert_html = False
     if re.search(SINGLE_LINE_CODE_PATTERN, text):
+        #replace entities before conversion to XML
+        text = sanitize_entities(text)
+
         text = re.sub(SINGLE_LINE_CODE_PATTERN, replace_single_line_code, text)
         convert_html = True
     
@@ -263,6 +276,9 @@ def render_answer(text):
     return wrap_cdata( markdown( text ) ) if convert_html is True else text
 
 def render_text(text, md_dir_path):
+    #sanitize entities before any conversion to XML
+    text = sanitize_entities(text)
+
     text = re.sub(MULTI_LINE_CODE_PATTERN, replace_multi_line_code, text)
     text = re.sub(SINGLE_LINE_CODE_PATTERN, replace_single_line_code, text)
     text = re.sub(IMAGE_PATTERN, replace_image_wrapper(md_dir_path), text)
