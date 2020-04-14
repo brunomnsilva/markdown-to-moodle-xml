@@ -1,9 +1,16 @@
 # Markdown to Moodle XML 
 
-## What is this?
+This tool allows you to create *multiple choice* questions through *markdown* syntaxe, producing Moodle XML files that can be directly imported in the platform.
 
-Tool to convert this:
+Currently, it allows:
 
+- Defining questions categories;
+- One or more correct answers;
+- Inclusion of *inline* and *block* code snippets;
+- Inclusion of *latex* math formulas;
+- Inclusion of images (local and from the *web*)
+
+For the following example, the outputs are presented at the end of this *readme*:
 ```markdown
 # Dummy Category 1
 
@@ -66,7 +73,59 @@ Does this code compile?
     - a fish and a funny flag
 ```
 
-into this:
+## Why?
+
+* Because writing quizes in `markdown` format is more pleasant than write it in `ms-office`, `libre-office` or `GIFT format`.
+  - I personally use *VS Code* with out-of-the-box markdown preview support.
+* Because our live is too short to copy-pasting the quizes into moodle!
+
+## How to use?
+
+Simply cast: `python m2m.py <your-md-file>`
+
+## Can I try it?
+
+Sure, cast this: `python m2m.py example.md`
+
+New files will be created: `example-DummyCategory1.xml` and `example-DummyCategory2.xml`
+
+## Is there anything special with the markdown file?
+
+Yes.
+
+* First, I treat `# section` as beginning of new question bank, with `section` has the *category* of the following questions.
+* Second, I treat `* question` as question. A question can contains multi-line string
+* Third, I treat ` - answer` as wrong answer and ` - !answer` as correct answer. The correct answer has an exclamation mark at the beginning
+* Any line preceeded by triple backtick will be converted to `<pre>` or `</pre>`
+* Any `![]()` will be converted into `<img src="data:image/png,base64,..."/>`
+* Any `$latex$` or `$$latex$$` will be converted into `\(\)`
+* Any inline code will be translated wrapped inside `<code>` tag
+
+## Prerequisites
+
+* Python
+* `markdown` python package (`pip install markdown --user`)
+* Human, non-muggle
+
+## Improvements / Fixes from this fork
+
+This fork makes the following changes and/or improvements:
+
+- `[DONE]` Allow different answer numbering from allowed values: 'none', 'abc', 'ABCD' or '123'
+- `[DONE]` Usage of prefix '!' in answer to mark it as correct (instead of space at the end)
+- `[DONE]` Usage of section name for quiz category (adds a dummy question, as per Moodle spec.)
+  - This only works if you have "Get category from file" checked, when importing in Moodle
+- `[FIX]`  Output of inline code should be wrapped only inside `<code>` tag
+- `[DONE]` Allow code formatting in answers for single block code and single dollar math 
+- `[DONE]` Output file based on (input filename + section text), but further sanitized
+- `[DONE]` Use of MD5 hash for question names instead of SHA224 -- more compact in Moodle view
+  - Probability of collision should remain fairly low within the expected question bank size)
+- `[FIX]` Fix html escaping for <, > and & inside code blocks
+
+## Sample Moodle XML Outputs
+
+Output for category "Dummy Category 1":
+
 ```xml
 <?xml version="1.0" ?>
 <quiz>
@@ -140,7 +199,9 @@ into this:
     </question>
 </quiz>
 ```
-and this:
+
+Output for category "Dummy Category 2":
+
 ```xml
 <?xml version="1.0" ?>
 <quiz>
@@ -262,53 +323,3 @@ Does this code compile?</p>]]></text>
     </question>
 </quiz>
 ```
-
-## Why?
-
-* Because writing quizes in `markdown` format is more pleasant than write it in `ms-office`, `libre-office` or `GIFT format`.
-* You can transform `markdown` file into `pdf` by using `pandoc`: `pandoc -f markdown  -o example.pdf example.md`
-* Because our live is too short to copy-pasting the quizes into moodle 
-* Because sometimes `macro` doesn't work
-
-## How to use?
-
-Simply cast: `python m2m.py <your-md-file>`
-
-## Can I try it?
-
-Sure, cast this: `python m2m.py example.md`
-
-New files will be created: `example-DummyCategory1.xml` and `example-DummyCategory2.xml`
-
-## Is there anything special with the markdown file?
-
-Yes.
-
-* First, I treat `# section` as beginning of new question bank, with `section` has the *category* of the following questions.
-* Second, I treat `* question` as question. A question can contains multi-line string
-* Third, I treat ` - answer` as wrong answer and ` - !answer` as correct answer. The correct answer has an exclamation mark at the beginning
-* Any line preceeded by triple backtick will be converted to `<pre>` or `</pre>`
-* Any `![]()` will be converted into `<img src="data:image/png,base64,..."/>`
-* Any `$latex$` or `$$latex$$` will be converted into `\(\)`
-* Any inline code will be translated wrapped inside `<code>` tag
-
-## Prerequisites
-
-* Python
-* `markdown` python package (`pip install markdown`)
-* Human, non-muggle
-
-## Improvements / Fixes from this fork
-
-This fork makes the following changes and/or improvements:
-
-- `[DONE]` Allow different answer numbering from allowed values: 'none', 'abc', 'ABCD' or '123'
-- `[DONE]` Usage of prefix '!' in answer to mark it as correct (instead of space at the end)
-- `[DONE]` Usage of section name for quiz category (adds a dummy question, as per Moodle spec.)
-  - This only works if you have "Get category from file" checked, when importing in Moodle
-- `[FIX]`  Output of inline code should be wrapped only inside `<code>` tag
-- `[DONE]` Allow code formatting in answers for single block code and single dollar math 
-- `[DONE]` Output file based on (input filename + section text), but further sanitized
-- `[DONE]` Use of MD5 hash for question names instead of SHA224 -- more compact in Moodle view
-  - Probability of collision should remain fairly low within the expected question bank size)
-- `[FIX]` Fix html escaping for <, > and & inside code blocks
