@@ -108,10 +108,16 @@ Yes.
 * Any `$latex$` or `$$latex$$` will be converted into `\(\)`
 * Any inline code will be translated wrapped inside `<code>` tag
 
+### What does not work
+
+* You cannot use two different code blocks in a question's body. Well, you can, but the result is not what you expect.
+    * The considered code block will be inside of the outwards delimiters.
+
 ## Prerequisites
 
 * Python
 * `markdown` python package (`pip install markdown --user`)
+* `pygments` python package (`pip install pygments --user`)
 * Human, non-muggle
 
 ## Improvements / Fixes from this fork
@@ -128,6 +134,7 @@ This fork makes the following changes and/or improvements:
 - `[DONE]` Use of MD5 hash for question names instead of SHA224 -- more compact in Moodle view
   - Probability of collision should remain fairly low within the expected question bank size)
 - `[FIX]` Fix html escaping for <, > and & inside code blocks
+- `[DONE]` Automatic conversion of block code snippets to image format
 
 ## Sample Moodle XML Outputs
 

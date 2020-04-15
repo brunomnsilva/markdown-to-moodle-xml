@@ -20,6 +20,7 @@
 # - `[DONE]` Use of MD5 hash for question names instead of SHA224 -- more compact in Moodle view
 #   - Probability of collision should remain fairly low within the expected question bank size)
 # - `[FIX]` Fix html escaping for <, > and & inside code blocks
+# - `[DONE]` Automatic conversion of block code snippets to image format
 #----------------------------------------------------------------------------------------------
 
 import os
