@@ -9,9 +9,9 @@ Currently, it allows:
 - Inclusion of *inline* and *block* code snippets;
 - Inclusion of *latex* math formulas;
 - Inclusion of images (local and from the *web*)
-- **New!** Automatic conversion of block code snippets to image format; use `/img` after the *lexer*, e.g.:
+- **New!** Automatic conversion of block code snippets to image format; use `{img}` after the *lexer*, e.g.:
     ```
-        ```cpp/img
+        ```cpp{img}
         int vec[] = {1,2,3,4,5,6,7,8};
         int *p = vec + 1;
         ```

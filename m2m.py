@@ -326,10 +326,10 @@ def replace_multi_line_code(match):
     if not lexer:
         lexer = ''
     
-    to_image = True if lexer.find('/img') > 0 else False
+    to_image = True if lexer.find('{img}') > 0 else False
 
     if to_image:
-        lexer = lexer.replace('/img', '')
+        lexer = lexer.replace('{img}', '')
         return convert_code_image_base64(lexer, code)
     else:
         #sanitize entities before any conversion to XML
