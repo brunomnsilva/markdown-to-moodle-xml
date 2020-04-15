@@ -31,6 +31,13 @@ import json
 import base64
 from markdown import markdown
 
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import ImageFormatter
+from pygments.lexers import ClassNotFound
+import tempfile
+
+
 if sys.version_info[0] == 3:
     from urllib.request import urlopen
 else:
@@ -44,7 +51,7 @@ WRONG_ANSWER_PATTERN = re.compile(r'^(\s*)-(\s)(.*[^ ])$')
 SWITCH_PRE_TAG_PATTERN = re.compile(r'^```.*$')
 EMPTY_LINE_PATTERN = re.compile(r'^\s*$')
 IMAGE_PATTERN = re.compile(r'!\[.*\]\((.+)\)')
-MULTI_LINE_CODE_PATTERN = re.compile(r'```.*\n([\s\S]+)```', re.MULTILINE)
+MULTI_LINE_CODE_PATTERN = re.compile(r'```(.*)\n([\s\S]+)```', re.MULTILINE)
 SINGLE_LINE_CODE_PATTERN = re.compile(r'`([^`]+)`')
 SINGLE_DOLLAR_LATEX_PATTERN = re.compile(r'\$(.+)\$')
 DOUBLE_DOLLAR_LATEX_PATTERN = re.compile(r'\$\$(.+)\$\$')
@@ -141,6 +148,14 @@ def md_script_to_dictionary(md_script):
                 current_question['text'] = ''
             
             current_question['text'] += md_row + '\n'
+
+        else:
+            # if we get an empy line pattern but are parsing inside
+            # a code block, we need that line break to keep code 
+            # structure
+            if 'text' in current_question:
+                if current_question['text'].find('```') > -1:
+                    current_question['text'] += md_row + '\n'
     
     dictionary = completing_dictionary(dictionary)
     return dictionary
@@ -276,9 +291,6 @@ def render_answer(text):
     return wrap_cdata( markdown( text ) ) if convert_html is True else text
 
 def render_text(text, md_dir_path):
-    #sanitize entities before any conversion to XML
-    text = sanitize_entities(text)
-
     text = re.sub(MULTI_LINE_CODE_PATTERN, replace_multi_line_code, text)
     text = re.sub(SINGLE_LINE_CODE_PATTERN, replace_single_line_code, text)
     text = re.sub(IMAGE_PATTERN, replace_image_wrapper(md_dir_path), text)
@@ -301,15 +313,28 @@ def replace_single_line_code(match):
 
     Output should only be wrapped inside a <code> tag.
     """
-
     code = match.group(1)
+    code = sanitize_entities(code)
     #return '<pre style="display:inline-block;"><code>' + code + '</code></pre>'
     return '<code>' + code + '</code>'
 
 
 def replace_multi_line_code(match):
-    code = match.group(1)
-    return '<pre><code>' + code + '</code></pre>'
+    lexer = match.group(1)
+    code = match.group(2)
+
+    if not lexer:
+        lexer = ''
+    
+    to_image = True if lexer.find('/img') > 0 else False
+
+    if to_image:
+        lexer = lexer.replace('/img', '')
+        return convert_code_image_base64(lexer, code)
+    else:
+        #sanitize entities before any conversion to XML
+        code = sanitize_entities(code)
+        return '<pre><code>' + code + '</code></pre>'
 
 
 def replace_image_wrapper(md_dir_path):
@@ -332,6 +357,34 @@ def build_image_tag(file_name):
     src_part = 'data:image/' + extension + ';base64,' + base64_image
     return '<img style="display:block;" src="' + src_part + '" />'
 
+def convert_code_image_base64(lexer_name, code):
+    """Converts a code snippet to an image in base64 format."""
+    
+    if not lexer_name:
+        lexer_name = 'pascal'
+    try:
+        lexer = get_lexer_by_name(lexer_name)
+    except ClassNotFound:
+        lexer = get_lexer_by_name('pascal')
+
+    imgBytes = highlight(code, lexer, ImageFormatter(font_size=18, line_numbers = False))
+
+    print(code)
+
+    #debugging purposes
+    #with open('code.png', 'wb') as img:
+    #    img.write(imgBytes)
+
+    temp = tempfile.NamedTemporaryFile()
+    temp.write(imgBytes)
+    temp.seek(0)
+
+    extension = 'png'
+    base64_image = (base64.b64encode(temp.read())).decode('utf-8')
+    src_part = 'data:image/' + extension + ';base64,' + base64_image
+    
+    temp.close()
+    return '<img style="display:block;" src="' + src_part + '" />'
 
 def md_to_xml_file(md_file_name):
     md_dir_path = os.path.dirname(os.path.abspath(md_file_name))
