@@ -369,12 +369,6 @@ def convert_code_image_base64(lexer_name, code):
 
     imgBytes = highlight(code, lexer, ImageFormatter(font_size=18, line_numbers = False))
 
-    print(code)
-
-    #debugging purposes
-    #with open('code.png', 'wb') as img:
-    #    img.write(imgBytes)
-
     temp = tempfile.NamedTemporaryFile()
     temp.write(imgBytes)
     temp.seek(0)
