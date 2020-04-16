@@ -381,6 +381,20 @@ def convert_code_image_base64(lexer_name, code):
     temp.close()
     return '<img style="display:block;" src="' + src_part + '" />'
 
+def create_output_filename(md_file_name, section_caption):
+    """Generates and sanitizes .xml output filename.
+
+    - All extensions and spaces are removed;
+    - Forward slashes '/' (possible in section caption for sub-categories)
+        are replaced with hyphens.
+    """
+    section_caption = section_caption.replace('/','-').replace(' ','')
+    md_name = md_file_name.replace('.md','')
+
+    output_file_name = md_name + '_' + section_caption + '.xml'
+    
+    return output_file_name
+
 def md_to_xml_file(md_file_name):
     md_dir_path = os.path.dirname(os.path.abspath(md_file_name))
     md_file = open(md_file_name, 'r')
@@ -388,7 +402,7 @@ def md_to_xml_file(md_file_name):
     dictionary = md_script_to_dictionary(md_script)
     for section_caption in dictionary:
         section = dictionary[section_caption]
-        xml_file = open(md_file_name.replace('.md','')+'-'+section_caption.replace(' ', '')+'.xml', 'w')
+        xml_file = open(create_output_filename(md_file_name, section_caption), 'w')
         xml_file.write(section_to_xml(section_caption, section, md_dir_path))
     return dictionary
 
