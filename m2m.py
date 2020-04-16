@@ -21,6 +21,7 @@
 #   - Probability of collision should remain fairly low within the expected question bank size)
 # - `[FIX]` Fix html escaping for <, > and & inside code blocks
 # - `[DONE]` Automatic conversion of block code snippets to image format
+# - `[TODO]` Pin down latex output issues and correct them. Mostly they work.
 #----------------------------------------------------------------------------------------------
 
 import os
@@ -108,6 +109,8 @@ def md_script_to_dictionary(md_script):
     """
     Implements a top-down parser for the script and extracts elements
     to a dictionary.
+
+    TODO: Include in question info about file:line_number for feedback purposes.
     """
     dictionary = {}
     section, current_question, current_answer = ([], {}, {})
@@ -170,8 +173,15 @@ def completing_dictionary(dictionary):
         for question in section:
             correct_answers = [x for x in question['answers'] if x['correct']]
             correct_answer_count = len(correct_answers)
+            
             if correct_answer_count < 1:
                 correct_answer_count = 1
+
+                #warn caller about this possibly unwanted situation
+                print(question['text'])
+                print('[WARNING] The above question has no correct answers assigned')
+                print('------------------------------------------------------------')
+            
             question['single'] = correct_answer_count == 1
             weight = round(100.0 / correct_answer_count, 7)
             for answer in question['answers']:
@@ -392,7 +402,7 @@ def create_output_filename(md_file_name, section_caption):
     md_name = md_file_name.replace('.md','')
 
     output_file_name = md_name + '_' + section_caption + '.xml'
-    
+
     return output_file_name
 
 def md_to_xml_file(md_file_name):
