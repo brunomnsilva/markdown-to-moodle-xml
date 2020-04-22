@@ -270,6 +270,7 @@ def wrap_cdata(html):
 def sanitize_entities(text):
     """Converts <, > and & to html entities."""
 
+    text = text.replace('#','\\#')
     #unfortunately, this order is important
     text = text.replace('&','&amp;')
     text = text.replace('>','&gt;')
