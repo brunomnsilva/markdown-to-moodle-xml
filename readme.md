@@ -1,5 +1,13 @@
 # Markdown to Moodle XML 
 
+**This repository will be deleted shortly. Please use the new version at:**
+
+https://github.com/brunomnsilva/markdown2moodle
+
+It's worth it!
+
+---
+
 This tool allows you to create *multiple choice* questions through *markdown* syntaxe, producing Moodle XML files that can be directly imported in the platform.
 
 Currently, it allows:
